@@ -42,8 +42,7 @@ abstract class Element
 
     protected $name;
 
-
-
+    protected $type;
 
     /**
      * Render the tag
@@ -282,5 +281,22 @@ abstract class Element
     {
         return $this->options;
     }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 
 }

@@ -183,6 +183,7 @@ class Form
                 $element = new $elementClass();
                 $element->setOptions($options);
                 $element->setName($name);
+                $element->setType($elementType);
                 break;
 
             default:
