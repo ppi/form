@@ -7,16 +7,20 @@
  * @link      www.ppiframework.com
  */
 namespace PPI\Form\Rule;
-use PPI\Form\Rule;
-class Required extends Rule {
 
-	/**
-	 * Validate against the Required rule
-	 *
-	 * @param string $data
-	 * @return bool
-	 */
-    public function validate($data) {
+use PPI\Form\Rule\Rule as BaseRule;
+
+class Required extends BaseRule
+{
+
+    /**
+     * Validate against the Required rule
+     *
+     * @param string $data
+     * @return bool
+     */
+    public function validate($data)
+    {
         return trim($data) !== '';
     }
 
