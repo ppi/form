@@ -11,7 +11,7 @@ namespace PPI\Form\Element;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-abstract class Element
+abstract class Element implements ElementInterface
 {
 
     /**
@@ -51,7 +51,7 @@ abstract class Element
      *
      * @return string
      */
-    abstract protected function render();
+    abstract public function render();
 
     /**
      * Set the element name
@@ -172,19 +172,13 @@ abstract class Element
     {
         // @todo - note, this will be removed in Symfony 3.0 and there's currently no way around that
         $validatorResult = $validator->validateValue($this->getValue(), $this->getConstraints());
-        if(empty($validatorResult)) {
+        if(count($validatorResult) === 0) {
             return new ElementValidationResult(true);
         } else {
             $errorMessages = array();
-            var_dump($validatorResult);
             foreach($validatorResult as $constraintViolation) {
-                $errorMessages[] = array(
-                    'message' => $constraintViolation->getMessageTemplate(),
-                    'parameters' => $constraintViolation->getMessageParameters(),
-                    'bad_value' => $constraintViolation->getInvalidValue()
-                );
+                $errorMessages[] = $constraintViolation->getMessage();
             }
-
             return new ElementValidationResult(false, $errorMessages);
         }
     }

@@ -2,6 +2,7 @@
 
 
 namespace PPI\Form\Element;
+use Symfony\Component\Validator\Constraints\Email;
 
 /**
  * An object which encapsulates the result of Symfony2's Validator component.
@@ -35,15 +36,11 @@ class ElementValidationResult
      *
      * <code>
      * array(
-     *   0 => array(
-     *          'message_template' => 'You must enter :min_chars characters!',
-     *          'parameters' => array('min_chars' => 5),
-     *          'bad_value' => 'four'
-     *        ),
-     *
-     *   1 => ...
-     *
+     *   0 => 'You must enter 12 characters or more',
+     *   1 => ...,
+     *   2 => ...
      * )
+     *
      * </code>
      *
      * @todo - garyttierney - inject parameters into the template and create a user readable message from that.
