@@ -42,8 +42,6 @@ class ElementValidationResult
      *
      * </code>
      *
-     * @todo - garyttierney - inject parameters into the template and create a user readable message from that.
-     *
      * @return array
      */
     public function getErrorMessages()
