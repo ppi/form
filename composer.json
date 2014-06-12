@@ -1,0 +1,7 @@
+{
+    "name": "ppi/form",
+    "autoload": {
+        "psr-4": { "PPI\\Form\\": "src/" }
+    },
+    "minimum-stability": "dev"
+}
