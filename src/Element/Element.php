@@ -8,7 +8,9 @@
  */
 namespace PPI\Form\Element;
 
-abstract class Element
+use PPI\Form\Element\ElementInterface;
+
+abstract class Element implements ElementInterface
 {
 
     /**
@@ -16,7 +18,7 @@ abstract class Element
      *
      * @param array $options
      */
-    function __construct(array $options = array())
+    function __construct($options = array())
     {
         $this->setOptions($options);
 
@@ -83,11 +85,11 @@ abstract class Element
 
         // Getter
         if (null === $value) {
-            return isset($this->attributes[$name]) ? $this->attributes[$name] : '';
+            return $this->getAttribute($name);
 
         // Setter
         } else {
-            $this->attributes[$name] = $value;
+            $this->setAttribute($name, $value);
             return $this;
         }
     }
@@ -233,7 +235,7 @@ abstract class Element
      *
      * @param array $options
      */
-    public function setOptions(array $options)
+    public function setOptions($options)
     {
 
         if (isset($options['value'])) {
@@ -270,9 +272,19 @@ abstract class Element
         return $this->attributes;
     }
 
-    public function setAttributes(array $attributes)
+    public function setAttributes($attributes)
     {
         $this->attributes = $attributes;
+    }
+
+    public function setAttribute($name, $value)
+    {
+        $this->attributes[$name] = $value;
+    }
+
+    public function getAttribute($name, $default = null)
+    {
+        return isset($this->attributes[$name]) ? $this->attributes[$name] : $default;
     }
 
     /**

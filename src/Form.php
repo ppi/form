@@ -172,9 +172,17 @@ class Form
     public function add($elementType, $name, array $options = array())
     {
 
-        $options['name'] = $name;
+        if(empty($elementType)) {
+            throw new \Exception('Missing element type');
+        }
 
+        if(empty($name)) {
+            throw new \Exception('Missing name option');
+        }
+
+        // Create the element
         $element = $this->createElement($elementType, $name, $options);
+        $element->attr('name', $name);
 
         if ($elementType === 'dropdown' || $elementType === 'select') {
 
@@ -279,9 +287,12 @@ class Form
      * @param string $type
      * @param string $name
      * @param array $options
+     *
+     * @throws \Exception if an invalid field type is passed
+     *
      * @return Element
      */
-    public function createElement($type, $name, array $options = array())
+    protected function createElement($type, $name, array $options = array())
     {
         if (!in_array($type, $this->elementTypes)) {
             throw new \Exception('Invalid Field Type: ' . $type);
@@ -297,7 +308,7 @@ class Form
         $element->setName($name);
         $element->setType($type);
 
-        // Data Binding
+        // Data Binding to this element if we have data for it.
         if (!empty($this->bindData) && isset($this->bindData[$name])) {
             $element->setValue($this->bindData[$name]);
         }

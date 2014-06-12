@@ -34,4 +34,20 @@ interface ElementInterface
      */
     public function getName();
 
+    public function getOptions();
+    public function setOptions($options);
+
+    /**
+     * Get the element type
+     *
+     * @return string
+     */
+    public function getType();
+
+    public function getAttributes();
+    public function setAttributes($attribute);
+
+    public function setAttribute($name, $value);
+    public function getAttribute($name, $default = null);
+
 }

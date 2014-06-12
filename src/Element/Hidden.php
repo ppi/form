@@ -14,7 +14,7 @@ class Hidden extends BaseElement
 {
 
     /**
-     * Render this tag
+     * Render the element
      *
      * @return string
      */

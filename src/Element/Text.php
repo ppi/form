@@ -14,7 +14,7 @@ class Text extends BaseElement
 {
 
     /**
-     * Render this tag
+     * Render the element
      *
      * @return string
      */
