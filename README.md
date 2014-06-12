@@ -1,4 +1,4 @@
-form
+The PPI Form Component
 ====
 
 ### Creating Elements
@@ -58,14 +58,19 @@ $form->text('username')->setValue($userEntity->getUsername());
 
 Each element object has a ``__toString()`` method aliased to ``render()`` so you can just echo the objects to render them
 
+Controller Code
+
 ``` php
 <?php
-// Controller Code
 $form = new Form();
 // ... add elements
 return $this->render('....', compact('form'));
 ?>
+```
 
+Template Code
+
+``` php
 <div class="username-container">
 <?= $form->getElement('username'); ?>
 </div>
@@ -83,5 +88,5 @@ $form->text('username');
 $entity = new UserEntity($userHelper->getByID($userID));
 $form->bind($entity->toArray());
 
-echo $form->getElement('username');
+
 ```
