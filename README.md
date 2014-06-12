@@ -22,8 +22,8 @@ $form->submit('submit_button', 'Click to Continue');
 $form = new Form();
 // ... add elements
 
-$usernameElement = $form->text('username');
-$passwordElement = $form->password('confirm_password');
+$usernameElement = $form->getElement('username');
+$passwordElement = $form->getElement('confirm_password');
 
 ```
 
