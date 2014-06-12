@@ -1,20 +1,26 @@
 <?php
 namespace PPI\Test\Form;
+
 use PPI\Form\Rule\Maxlength;
-class MaxlengthRuleTest extends \PHPUnit_Framework_TestCase {
 
-	function setUp() {
-		$this->_rule = new Maxlength();
-	}
+class MaxlengthRuleTest extends \PHPUnit_Framework_TestCase
+{
 
-	function tearDown() {
-		unset($this->_rule);
-	}
+    function setUp()
+    {
+        $this->_rule = new Maxlength();
+    }
+
+    function tearDown()
+    {
+        unset($this->_rule);
+    }
 
     /**
      * @dataProvider providerForValidationTrue
      */
-	function testValidatesTrue($size, $data) {
+    function testValidatesTrue($size, $data)
+    {
         $this->_rule->setRuleData($size);
         $this->assertTrue($this->_rule->validate($data));
     }
@@ -22,21 +28,24 @@ class MaxlengthRuleTest extends \PHPUnit_Framework_TestCase {
     /**
      * @dataProvider providerForValidationFalse
      */
-	function testValidatesFalse($size, $data) {
+    function testValidatesFalse($size, $data)
+    {
         $this->_rule->setRuleData($size);
         $this->assertFalse($this->_rule->validate($data));
     }
 
-    function providerForValidationTrue() {
+    function providerForValidationTrue()
+    {
         return array(
             array(10, '0123456789'),
-            array(10, '   0123456789   '),//whitespace is ignored
+            array(10, '   0123456789   '), //whitespace is ignored
             array(10, '0'),
             array(10, ''),
         );
     }
 
-    function providerForValidationFalse() {
+    function providerForValidationFalse()
+    {
         return array(
             array(10, '0123456789012'),
             array(10, '  0123456789012  '),
