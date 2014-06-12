@@ -165,11 +165,6 @@ class Form
     public function add($elementType, $name, array $options = array())
     {
 
-        // The Getter
-        if(isset($this->elements[$name])) {
-            return $this->elements[$name];
-        }
-
         $options['name'] = $name;
 
         switch ($elementType) {
