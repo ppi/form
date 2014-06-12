@@ -8,12 +8,18 @@
  */
 namespace PPI\Form;
 
+use PPI\Form\Element\Element;
 use PPI\Form\Element\ElementInterface;
 
 class Form
 {
 
     protected $elements = array();
+
+    protected $elementTypes = array(
+        'text', 'textarea', 'password', 'submit',
+        'checkbox', 'radio', 'hidden', 'select', 'dropdown'
+    );
 
     /**
      * The bind data for the form.
@@ -156,6 +162,7 @@ class Form
      * Add a field to our form.
      *
      * @param string $elementType
+     * @param string $name
      * @param array $options
      *
      * @throws \Exception if missing a name option
@@ -167,28 +174,7 @@ class Form
 
         $options['name'] = $name;
 
-        switch ($elementType) {
-
-            case 'form':
-            case 'text':
-            case 'textarea':
-            case 'password':
-            case 'submit':
-            case 'checkbox':
-            case 'radio':
-            case 'hidden':
-            case 'select':
-            case 'dropdown':
-                $elementClass = '\PPI\Form\Element\\' . ucfirst($elementType);
-                $element = new $elementClass();
-                $element->setOptions($options);
-                $element->setName($name);
-                $element->setType($elementType);
-                break;
-
-            default:
-                throw new \Exception('Invalid Field Type: ' . $elementType);
-        }
+        $element = $this->createElement($elementType, $name, $options);
 
         if($elementType === 'dropdown' || $elementType === 'select') {
 
@@ -201,6 +187,7 @@ class Form
                 $selected = $options['selected'];
                 unset($options['selected']);
             }
+            // Re-apply options after some manipulation
             $element->setOptions($options);
 
             // @todo revise this, it needs refactored as we have bind data now.
@@ -217,7 +204,7 @@ class Form
             $element->setValue($this->bindData[$name]);
         }
 
-        $this->elements[$name] = $element;
+        $this->addElement($element);
 
         return $element;
     }
@@ -279,6 +266,32 @@ class Form
     public function bind(array $data)
     {
         $this->bindData = $data;
+    }
+
+    /**
+     * Create an element
+     *
+     * @param string $type
+     * @param string $name
+     * @param array $options
+     * @return Element
+     */
+    public function createElement($type, $name, array $options = array())
+    {
+        if(!in_array($type, $this->elementTypes)) {
+            throw new \Exception('Invalid Field Type: ' . $type);
+        }
+
+        $elementClass = '\PPI\Form\Element\\' . ucfirst($type);
+        /**
+         * @var Element $element
+         */
+        $element = new $elementClass();
+        $element->setOptions($options);
+        $element->setAttributes($options);
+        $element->setName($name);
+        $element->setType($type);
+        return $element;
     }
 
     public function end()

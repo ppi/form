@@ -19,7 +19,7 @@ abstract class Element
     function __construct(array $options = array())
     {
         $this->setOptions($options);
-        $this->setAttributes($options);
+
         $this->attributes = $options;
     }
 
