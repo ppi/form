@@ -120,7 +120,7 @@ class Form
      */
     public function hidden($name, array $options = array())
     {
-        return $this->add('hidden', $options);
+        return $this->add($name, 'hidden', $options);
     }
 
     /**
@@ -131,7 +131,7 @@ class Form
      * @param array $options
      * @return object
      */
-    public function select($name, array $dropdownValues, array $options = array())
+    public function select($name, array $dropdownValues = array(), array $options = array())
     {
         return $this->add('select', array(
                 'name' => $name,
@@ -147,7 +147,7 @@ class Form
      * @param array $options
      * @return object
      */
-    public function dropdown($name, array $dropdownValues, array $options = array())
+    public function dropdown($name, array $dropdownValues = array(), array $options = array())
     {
         return $this->select($name, $dropdownValues, $options);
     }
@@ -164,6 +164,12 @@ class Form
      */
     public function add($elementType, $name, array $options = array())
     {
+
+        // The Getter
+        if(isset($this->elements[$name])) {
+            return $this->elements[$name];
+        }
+
         $options['name'] = $name;
 
         switch ($elementType) {
