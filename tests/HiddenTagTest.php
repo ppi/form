@@ -2,7 +2,7 @@
 namespace PPI\Test\Form;
 
 use PPI\Form\Element\Hidden,
-    PPI\Form;
+    PPI\Form\Form;
 
 class HiddenTest extends \PHPUnit_Framework_TestCase
 {
