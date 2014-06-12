@@ -18,7 +18,7 @@ class Textarea extends BaseTag
      *
      * @var string
      */
-    protected $_value = '';
+    protected $value = '';
 
     /**
      * The constructor
@@ -31,9 +31,9 @@ class Textarea extends BaseTag
         if (isset($options['value'])) {
             $value = $options['value'];
             unset($options['value']);
-            $this->_value = $value;
+            $this->value = $value;
         }
-        $this->_attributes = $options;
+        $this->attributes = $options;
     }
 
     /**
@@ -44,7 +44,7 @@ class Textarea extends BaseTag
      */
     function setValue($value)
     {
-        $this->_value = $value;
+        $this->value = $value;
     }
 
     /**
@@ -54,7 +54,7 @@ class Textarea extends BaseTag
      */
     function getValue()
     {
-        return $this->_value;
+        return $this->value;
     }
 
     /**

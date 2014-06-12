@@ -21,7 +21,7 @@ class Form extends BaseTag
     function __construct(array $options = array())
     {
         $options['action'] = isset($options['action']) ? $options['action'] : '';
-        $this->_attributes = $options;
+        $this->attributes = $options;
     }
 
     /**

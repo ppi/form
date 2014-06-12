@@ -21,14 +21,14 @@ class Select extends BaseTag
      *
      * @var array
      */
-    protected $_options = array();
+    protected $options = array();
 
     /**
      * Selected Dropdown Option
      *
      * @var null
      */
-    protected $_selected = null;
+    protected $selected = null;
 
     /**
      * The constructor
@@ -47,7 +47,7 @@ class Select extends BaseTag
             unset($options['value']);
         }
 
-        $this->_attributes = $options;
+        $this->attributes = $options;
     }
 
 
@@ -59,7 +59,7 @@ class Select extends BaseTag
      */
     function setValues(array $options)
     {
-        $this->_options = $options;
+        $this->options = $options;
     }
 
     /**
@@ -70,7 +70,7 @@ class Select extends BaseTag
      */
     function setValue($value)
     {
-        $this->_selected = $value;
+        $this->selected = $value;
     }
 
     /**
@@ -81,9 +81,9 @@ class Select extends BaseTag
     function buildOptions()
     {
         $html = '';
-        foreach ($this->_options as $key => $val) {
+        foreach ($this->options as $key => $val) {
             $selected = '';
-            if ($this->_selected !== null && $this->_selected == $val) {
+            if ($this->selected !== null && $this->selected == $val) {
                 $selected = 'selected="selected" ';
             }
             $html .= sprintf(self::optionsFormat, $selected, $key, $val);

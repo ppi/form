@@ -15,14 +15,14 @@ abstract class Rule
      *
      * @var array
      */
-    protected $_ruleData = null;
+    protected $ruleData = null;
 
     /**
      * The message for this rule
      *
      * @var null
      */
-    protected $_ruleMessage = null;
+    protected $ruleMessage = null;
 
     /**
      * Validates data by this rule
@@ -52,7 +52,7 @@ abstract class Rule
      */
     public function getRuleData()
     {
-        return $this->_ruleData;
+        return $this->ruleData;
     }
 
     /**
@@ -63,7 +63,7 @@ abstract class Rule
      */
     public function setRuleData($value)
     {
-        $this->_ruleData = $value;
+        $this->ruleData = $value;
     }
 
     /**
@@ -74,7 +74,7 @@ abstract class Rule
      */
     public function setRuleMessage($message)
     {
-        $this->_ruleMessage = $message;
+        $this->ruleMessage = $message;
     }
 
     /**
@@ -84,7 +84,7 @@ abstract class Rule
      */
     public function getRuleMessage()
     {
-        return $this->_ruleMessage;
+        return $this->ruleMessage;
     }
 
 }

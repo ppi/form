@@ -20,7 +20,7 @@ class Checkbox extends BaseTag
      */
     function __construct(array $options = array())
     {
-        $this->_attributes = $options;
+        $this->attributes = $options;
     }
 
     /**
@@ -31,7 +31,7 @@ class Checkbox extends BaseTag
      */
     function setValue($value)
     {
-        $this->_attributes['value'] = $value;
+        $this->attributes['value'] = $value;
     }
 
     /**
@@ -41,7 +41,7 @@ class Checkbox extends BaseTag
      */
     function getValue()
     {
-        return $this->_attributes['value'];
+        return $this->attributes['value'];
     }
 
     /**

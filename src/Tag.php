@@ -14,14 +14,14 @@ abstract class Tag
     /**
      * @var array
      */
-    protected $_attributes = array();
+    protected $attributes = array();
 
     /**
      * The rules for this field
      *
      * @var array
      */
-    protected $_rules = array();
+    protected $rules = array();
 
 
     /**
@@ -42,9 +42,9 @@ abstract class Tag
     {
 
         if (null === $value) {
-            return isset($this->_attributes[$name]) ? $this->_attributes[$name] : '';
+            return isset($this->attributes[$name]) ? $this->attributes[$name] : '';
         } else {
-            $this->_attributes[$name] = $value;
+            $this->attributes[$name] = $value;
         }
     }
 
@@ -56,7 +56,7 @@ abstract class Tag
      */
     public function hasAttr($attr)
     {
-        return isset($this->_attributes[$attr]);
+        return isset($this->attributes[$attr]);
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class Tag
     {
 
         $attrs = array();
-        foreach ($this->_attributes as $key => $name) {
+        foreach ($this->attributes as $key => $name) {
             $attrs[] = $this->buildAttr($key);
         }
         return implode(' ', $attrs);
@@ -122,7 +122,7 @@ abstract class Tag
         if ($ruleValue !== null) {
             $ruleClass->setRuleData($ruleValue);
         }
-        $this->_rules[$ruleType] = $ruleClass;
+        $this->rules[$ruleType] = $ruleClass;
         return $this;
     }
 
@@ -133,7 +133,7 @@ abstract class Tag
      */
     public function getRule($ruleType)
     {
-        return isset($this->_rules[$ruleType]) ? $this->_rules[$ruleType] : null;
+        return isset($this->rules[$ruleType]) ? $this->rules[$ruleType] : null;
     }
 
     /**
@@ -144,7 +144,7 @@ abstract class Tag
      */
     public function validate()
     {
-        foreach ($this->_rules as $rule) {
+        foreach ($this->rules as $rule) {
             if ($rule->validate($this->getValue()) === false) {
                 $this->setErrorMessage($rule->getRuleMessage());
                 return false;
@@ -161,7 +161,7 @@ abstract class Tag
      */
     public function setErrorMessage($message)
     {
-        $this->_errorMessage = $message;
+        $this->errorMessage = $message;
     }
 
     /**
@@ -171,7 +171,7 @@ abstract class Tag
      */
     public function getErrorMessage()
     {
-        return $this->_errorMessage;
+        return $this->errorMessage;
     }
 
     /**
@@ -181,7 +181,7 @@ abstract class Tag
      */
     public function hasErrored()
     {
-        return $this->_errorMessage !== null;
+        return $this->errorMessage !== null;
     }
 
 

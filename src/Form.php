@@ -16,9 +16,9 @@ class Form
      *
      * @var array
      */
-    protected $_bindData = array();
+    protected $bindData = array();
 
-    function __construct()
+    public function __construct()
     {
     }
 
@@ -30,7 +30,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function create($action = '', $method = '', array $options = array())
+    public function create($action = '', $method = '', array $options = array())
     {
         return $this->add('form', array('method' => $method, 'action' => $action) + $options);
     }
@@ -42,7 +42,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function text($name, array $options = array())
+    public function text($name, array $options = array())
     {
         if (!empty($name)) {
             return $this->add('text', array('name' => $name) + $options);
@@ -57,7 +57,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function textarea($name, array $options = array())
+    public function textarea($name, array $options = array())
     {
         if (!empty($name)) {
             return $this->add('textarea', array('name' => $name) + $options);
@@ -72,7 +72,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function password($name, array $options = array())
+    public function password($name, array $options = array())
     {
         if (!empty($name)) {
             return $this->add('password', array('name' => $name) + $options);
@@ -87,7 +87,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function checkbox($name, array $options = array())
+    public function checkbox($name, array $options = array())
     {
         if (!empty($name)) {
             return $this->add('checkbox', array('name' => $name) + $options);
@@ -102,7 +102,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function radio($name, array $options = array())
+    public function radio($name, array $options = array())
     {
         if (!empty($name)) {
             return $this->add('radio', array('name' => $name) + $options);
@@ -117,7 +117,7 @@ class Form
      * @param array $options
      * @return void
      */
-    function submit($value = 'Submit', array $options = array())
+    public function submit($value = 'Submit', array $options = array())
     {
         return $this->add('submit', array('value' => $value) + $options);
     }
@@ -129,7 +129,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function hidden($name, array $options = array())
+    public function hidden($name, array $options = array())
     {
         return $this->add('hidden', array('name' => $name) + $options);
     }
@@ -142,7 +142,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function select($name, array $dropdownValues, array $options = array())
+    public function select($name, array $dropdownValues, array $options = array())
     {
         return $this->add('select', array(
                 'name' => $name,
@@ -158,7 +158,7 @@ class Form
      * @param array $options
      * @return string
      */
-    function dropdown($name, array $dropdownValues, array $options = array())
+    public function dropdown($name, array $dropdownValues, array $options = array())
     {
         return $this->select($name, $dropdownValues, $options);
     }
@@ -170,41 +170,41 @@ class Form
      * @param array $options
      * @return void
      */
-    function add($fieldType, array $options = array())
+    public function add($fieldType, array $options = array())
     {
 
         switch ($fieldType) {
 
             case 'form':
-                $field = new Form\Tag\Form($options);
+                $field = new \PPI\Form\Tag\Form($options);
                 break;
 
             case 'text':
-                $field = new Form\Tag\Text($options);
+                $field = new \PPI\Form\Tag\Text($options);
                 break;
 
             case 'textarea':
-                $field = new Form\Tag\Textarea($options);
+                $field = new \PPI\Form\Tag\Textarea($options);
                 break;
 
             case 'password':
-                $field = new Form\Tag\Password($options);
+                $field = new \PPI\Form\Tag\Password($options);
                 break;
 
             case 'submit':
-                $field = new Form\Tag\Submit($options);
+                $field = new \PPI\Form\Tag\Submit($options);
                 break;
 
             case 'checkbox':
-                $field = new Form\Tag\Checkbox($options);
+                $field = new \PPI\Form\Tag\Checkbox($options);
                 break;
 
             case 'radio':
-                $field = new Form\Tag\Radio($options);
+                $field = new \PPI\Form\Tag\Radio($options);
                 break;
 
             case 'hidden':
-                $field = new Form\Tag\Hidden($options);
+                $field = new \PPI\Form\Tag\Hidden($options);
                 break;
 
             case 'select':
@@ -220,7 +220,7 @@ class Form
                 }
 
                 // @todo revise this, it needs refactored as we have bind data now.
-                $field = new Form\Tag\Select($options);
+                $field = new \PPI\Form\Tag\Select($options);
                 if (isset($values)) {
                     $field->setValues($values);
                 }
@@ -231,12 +231,12 @@ class Form
                 break;
 
             default:
-                throw new CoreException('Invalid Field Type: ' . $fieldType);
+                throw new \Exception('Invalid Field Type: ' . $fieldType);
         }
 
         // If we have bind data against the current element. Lets apply it.
-        if (isset($options['name']) && !empty($this->_bindData) && isset($this->_bindData[$options['name']])) {
-            $field->setValue($this->_bindData[$options['name']]);
+        if (isset($options['name']) && !empty($this->bindData) && isset($this->bindData[$options['name']])) {
+            $field->setValue($this->bindData[$options['name']]);
         }
 
         return $field;
@@ -248,12 +248,12 @@ class Form
      * @param array $data
      * @return void
      */
-    function bind(array $data)
+    public function bind(array $data)
     {
-        $this->_bindData = $data;
+        $this->bindData = $data;
     }
 
-    function end()
+    public function end()
     {
         return '</form>';
     }
