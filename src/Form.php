@@ -106,7 +106,7 @@ class Form
      * @param array $options
      * @return object
      */
-    public function submit($value = 'Submit', array $options = array())
+    public function submit($name, $value = 'Submit', array $options = array())
     {
         return $this->add('submit', '', array('value' => $value) + $options);
     }
@@ -234,6 +234,44 @@ class Form
     public function addElement(ElementInterface $element)
     {
         $this->elements[$element->getName()] = $element;
+    }
+
+    /**
+     * Get an element
+     *
+     * @param string $name
+     * @return object
+     * @throws \Exception If the element doesn't exist
+     */
+    public function getElement($name)
+    {
+
+        if(!isset($this->elements[$name])) {
+            throw new \Exception('Missing element by name: ' . $name);
+        }
+
+        return $this->elements[$name];
+    }
+
+    /**
+     * Get all elements
+     *
+     * @return array
+     */
+    public function getElements()
+    {
+        return $this->elements;
+    }
+
+    /**
+     * Check if an element exists
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function hasElement($name)
+    {
+        return isset($this->elements[$name]);
     }
 
     /**
