@@ -57,5 +57,5 @@ $form->text('username');
 $entity = new UserEntity($userHelper->getByID($userID));
 $form->bind($entity->toArray());
 
-echo $form->text('username');
+echo $form->getElement('username');
 ```
