@@ -184,27 +184,39 @@ class Form
         $element = $this->createElement($elementType, $name, $options);
         $element->attr('name', $name);
 
-        if ($elementType === 'dropdown' || $elementType === 'select') {
 
-            // Handle Special Options
-            if (isset($options['dropdownValues'])) {
-                $values = $options['dropdownValues'];
-                unset($options['dropdownValues']);
-            }
-            if (isset($options['selected'])) {
-                $selected = $options['selected'];
-                unset($options['selected']);
-            }
-            // Re-apply options after some manipulation
-            $element->setOptions($options);
+        switch($elementType) {
+            case 'dropdown':
+            case 'select':
 
-            // @todo revise this, it needs refactored as we have bind data now.
-            if (isset($values)) {
-                $element->setValues($values);
-            }
-            if (isset($selected)) {
-                $element->setValue($selected);
-            }
+                // Handle Special Options
+                if (isset($options['dropdownValues'])) {
+                    $values = $options['dropdownValues'];
+                    unset($options['dropdownValues']);
+                }
+                if (isset($options['selected'])) {
+                    $selected = $options['selected'];
+                    unset($options['selected']);
+                }
+                // Re-apply options after some manipulation
+                $element->setOptions($options);
+
+                // @todo revise this, it needs refactored as we have bind data now.
+                if (isset($values)) {
+                    $element->setValues($values);
+                }
+                if (isset($selected)) {
+                    $element->setValue($selected);
+                }
+                break;
+
+            case 'label':
+
+                // Setup the for="" for this label to pull from the element's ID matching $name
+                if(isset($this->elements[$name]) && $this->elements[$name]->hasAttribute('id')) {
+                    $element->setAttribute('for', $this->elements[$name]->getAttribute('id'));
+                }
+
         }
 
         $this->addElement($element);
