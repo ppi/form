@@ -1,51 +1,56 @@
 <?php
 /**
- * Form class will help in automating rendering forms
+ * This file is part of the PPI Framework.
  *
- * @author    Paul Dragoonis <dragoonis@php.net>
- * @license   http://opensource.org/licenses/mit-license.php MIT
- * @package   Form
- * @link      www.ppiframework.com
- *
+ * @copyright  Copyright (c) 2011-2013 Paul Dragoonis <paul@ppi.io>
+ * @license    http://opensource.org/licenses/mit-license.php MIT
+ * @link       http://www.ppi.io
  */
 namespace PPI\Form\Tag;
-use PPI\Form\Tag;
-class Radio extends Tag {
 
-	/**
-	 * The constructor
-	 *
-	 * @param array $options
-	 */
-	function __construct(array $options = array()) {
-		$this->_attributes = $options;
-	}
+use PPI\Form\Tag as BaseTag;
 
-	/**
-	 * Set the value of this field
-	 *
-	 * @param string $value
-	 * @return void
-	 */
-	function setValue($value) {
-		$this->_attributes['value'] = $value;
-	}
+class Radio extends BaseTag
+{
 
-	/**
-	 * Get the value of this field.
-	 *
-	 * @return string
-	 */
-	function getValue() {
-		return $this->_attributes['value'];
-	}
+    /**
+     * The constructor
+     *
+     * @param array $options
+     */
+    function __construct(array $options = array())
+    {
+        $this->_attributes = $options;
+    }
 
-	/**
-	 * Render this tag
-	 *
-	 * @return string
-	 */
-	function render() {
-		return '<input type="radio" ' . $this->buildAttrs() . '>';
-	}
+    /**
+     * Set the value of this field
+     *
+     * @param string $value
+     * @return void
+     */
+    function setValue($value)
+    {
+        $this->_attributes['value'] = $value;
+    }
+
+    /**
+     * Get the value of this field.
+     *
+     * @return string
+     */
+    function getValue()
+    {
+        return $this->_attributes['value'];
+    }
+
+    /**
+     * Render this tag
+     *
+     * @return string
+     */
+    function render()
+    {
+        return '<input type="radio" ' . $this->buildAttrs() . '>';
+    }
 }

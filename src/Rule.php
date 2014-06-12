@@ -1,26 +1,28 @@
 <?php
 /**
- * @author    Paul Dragoonis <dragoonis@php.net>
- * @license   http://opensource.org/licenses/mit-license.php MIT
- * @package   Form
- * @link      www.ppiframework.com
+ * This file is part of the PPI Framework.
+ *
+ * @copyright  Copyright (c) 2011-2013 Paul Dragoonis <paul@ppi.io>
+ * @license    http://opensource.org/licenses/mit-license.php MIT
+ * @link       http://www.ppi.io
  */
 namespace PPI\Form;
-abstract class Rule {
+abstract class Rule
+{
 
-	/**
-	 * The abritary param
-	 *
-	 * @var array
-	 */
-	protected $_ruleData = null;
+    /**
+     * The abritary param
+     *
+     * @var array
+     */
+    protected $_ruleData = null;
 
-	/**
-	 * The message for this rule
-	 *
-	 * @var null
-	 */
-	protected $_ruleMessage = null;
+    /**
+     * The message for this rule
+     *
+     * @var null
+     */
+    protected $_ruleMessage = null;
 
     /**
      * Validates data by this rule
@@ -35,11 +37,12 @@ abstract class Rule {
      *
      * @param mixed $param
      */
-    public function __construct($ruleData = null) {
+    public function __construct($ruleData = null)
+    {
 
-		if($ruleData !== null) {
-	        $this->setParam($ruleData);
-		}
+        if ($ruleData !== null) {
+            $this->setParam($ruleData);
+        }
     }
 
     /**
@@ -47,7 +50,8 @@ abstract class Rule {
      *
      * @return string
      */
-    public function getRuleData() {
+    public function getRuleData()
+    {
         return $this->_ruleData;
     }
 
@@ -57,27 +61,30 @@ abstract class Rule {
      * @param mixed $value
      * @return void
      */
-    public function setRuleData($value) {
+    public function setRuleData($value)
+    {
         $this->_ruleData = $value;
     }
 
-	/**
-	 * Set the rule message
-	 *
-	 * @param string $message
-	 * @return void
-	 */
-	public function setRuleMessage($message) {
-		$this->_ruleMessage = $message;
-	}
+    /**
+     * Set the rule message
+     *
+     * @param string $message
+     * @return void
+     */
+    public function setRuleMessage($message)
+    {
+        $this->_ruleMessage = $message;
+    }
 
-	/**
-	 * Get the rule message
-	 *
-	 * @return string|null
-	 */
-	public function getRuleMessage() {
-		return $this->_ruleMessage;
-	}
+    /**
+     * Get the rule message
+     *
+     * @return string|null
+     */
+    public function getRuleMessage()
+    {
+        return $this->_ruleMessage;
+    }
 
 }

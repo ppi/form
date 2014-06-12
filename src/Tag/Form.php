@@ -1,42 +1,47 @@
 <?php
 /**
- * Form class will help in automating rendering forms
+ * This file is part of the PPI Framework.
  *
- * @author    Paul Dragoonis <dragoonis@php.net>
- * @license   http://opensource.org/licenses/mit-license.php MIT
- * @package   Form
- * @link      www.ppiframework.com
+ * @copyright  Copyright (c) 2011-2013 Paul Dragoonis <paul@ppi.io>
+ * @license    http://opensource.org/licenses/mit-license.php MIT
+ * @link       http://www.ppi.io
  */
 namespace PPI\Form\Tag;
-use PPI\Form\Tag;
-class Form extends Tag {
 
-	/**
-	 * The constructor
-	 *
-	 * @param array $options
-	 */
-	function __construct(array $options = array()) {
-		$options['action'] = isset($options['action']) ? $options['action'] : '';
-		$this->_attributes = $options;
-	}
+use PPI\Form\Tag as BaseTag;
 
-	/**
-	 * Render this tag
-	 *
-	 * @return string
-	 */
-	function render() {
-		$attrs = $this->buildAttrs();
-		return "<form $attrs>";
-	}
+class Form extends BaseTag
+{
 
-	/**
-	 * When echo'ing this tag class, we call render
-	 *
-	 * @return string
-	 */
-	function __toString() {
-		return $this->render();
-	}
+    /**
+     * The constructor
+     *
+     * @param array $options
+     */
+    function __construct(array $options = array())
+    {
+        $options['action'] = isset($options['action']) ? $options['action'] : '';
+        $this->_attributes = $options;
+    }
+
+    /**
+     * Render this tag
+     *
+     * @return string
+     */
+    function render()
+    {
+        $attrs = $this->buildAttrs();
+        return "<form $attrs>";
+    }
+
+    /**
+     * When echo'ing this tag class, we call render
+     *
+     * @return string
+     */
+    function __toString()
+    {
+        return $this->render();
+    }
 }
