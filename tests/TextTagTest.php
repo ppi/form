@@ -6,25 +6,27 @@ use PPI\Form\Element\Text;
 class TextElementTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $form;
+
     function setUp()
     {
-        $this->_form = new \PPI\Form();
+        $this->form = new \PPI\Form\Form();
     }
 
     function tearDown()
     {
-        unset($this->_form);
+        unset($this->form);
     }
 
     function testCreate()
     {
-        $output = $this->_form->text('username')->render();
+        $output = $this->form->text('username')->render();
         $this->assertEquals($output, '<input type="text" name="username">');
     }
 
     function testCreateWithAttrs()
     {
-        $output = $this->_form->text('username', array('id' => 'bar'))->render();
+        $output = $this->form->text('username', array('id' => 'bar'))->render();
         $this->assertEquals($output, '<input type="text" name="username" id="bar">');
     }
 

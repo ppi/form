@@ -7,25 +7,27 @@ use PPI\Form\Element\Checkbox;
 class CheckboxElementTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $form;
+
     function setUp()
     {
-        $this->_form = new Form();
+        $this->form = new Form();
     }
 
     function tearDown()
     {
-        unset($this->_form);
+        unset($this->form);
     }
 
     function testCreate()
     {
-        $output = $this->_form->checkbox('mycheck')->render();
+        $output = $this->form->checkbox('mycheck')->render();
         $this->assertEquals($output, '<input type="checkbox" name="mycheck">');
     }
 
     function testCreateWithAttrs()
     {
-        $output = $this->_form->checkbox('mycheck', array('id' => 'bar'))->render();
+        $output = $this->form->checkbox('mycheck', array('id' => 'bar'))->render();
         $this->assertEquals($output, '<input type="checkbox" name="mycheck" id="bar">');
     }
 

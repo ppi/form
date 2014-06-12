@@ -6,25 +6,27 @@ use PPI\Form\Element\Password;
 class PasswordElementTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $form;
+
     function setUp()
     {
-        $this->_form = new \PPI\Form();
+        $this->form = new \PPI\Form\Form();
     }
 
     function tearDown()
     {
-        unset($this->_form);
+        unset($this->form);
     }
 
     function testCreate()
     {
-        $output = $this->_form->password('mypass')->render();
+        $output = $this->form->password('mypass')->render();
         $this->assertEquals($output, '<input type="password" name="mypass">');
     }
 
     function testCreateWithAttrs()
     {
-        $output = $this->_form->password('mypass', array('id' => 'bar'))->render();
+        $output = $this->form->password('mypass', array('id' => 'bar'))->render();
         $this->assertEquals($output, '<input type="password" name="mypass" id="bar">');
     }
 

@@ -6,25 +6,27 @@ use PPI\Form\Element\Radio;
 class RadioboxElementTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $form;
+
     function setUp()
     {
-        $this->_form = new \PPI\Form();
+        $this->form = new \PPI\Form\Form();
     }
 
     function tearDown()
     {
-        unset($this->_form);
+        unset($this->form);
     }
 
     function testCreate()
     {
-        $output = $this->_form->radio('myradio')->render();
+        $output = $this->form->radio('myradio')->render();
         $this->assertEquals($output, '<input type="radio" name="myradio">');
     }
 
     function testCreateWithAttrs()
     {
-        $output = $this->_form->radio('myradio', array('id' => 'bar'))->render();
+        $output = $this->form->radio('myradio', array('id' => 'bar'))->render();
         $this->assertEquals($output, '<input type="radio" name="myradio" id="bar">');
     }
 

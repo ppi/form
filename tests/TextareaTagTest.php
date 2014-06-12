@@ -6,25 +6,27 @@ use PPI\Form\Element\Textarea;
 class TextareaElementTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $form;
+
     function setUp()
     {
-        $this->_form = new \PPI\Form();
+        $this->form = new \PPI\Form\Form();
     }
 
     function tearDown()
     {
-        unset($this->_form);
+        unset($this->form);
     }
 
     function testCreate()
     {
-        $output = $this->_form->textarea('desc')->render();
+        $output = $this->form->textarea('desc')->render();
         $this->assertEquals($output, '<textarea name="desc"></textarea>');
     }
 
     function testCreateWithAttrs()
     {
-        $output = $this->_form->textarea('desc', array('id' => 'bar'))->render();
+        $output = $this->form->textarea('desc', array('id' => 'bar'))->render();
         $this->assertEquals($output, '<textarea name="desc" id="bar"></textarea>');
     }
 

@@ -6,25 +6,27 @@ use PPI\Form\Element\Submit;
 class SubmitTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $form;
+
     function setUp()
     {
-        $this->_form = new \PPI\Form();
+        $this->form = new \PPI\Form\Form();
     }
 
     function tearDown()
     {
-        unset($this->_form);
+        unset($this->form);
     }
 
     function testCreate()
     {
-        $output = $this->_form->submit('Register')->render();
+        $output = $this->form->submit('Register')->render();
         $this->assertEquals($output, '<input type="submit" value="Register">');
     }
 
     function testCreateWithAttrs()
     {
-        $output = $this->_form->submit('Register', array('name' => 'foo', 'id' => 'bar'))->render();
+        $output = $this->form->submit('Register', array('name' => 'foo', 'id' => 'bar'))->render();
         $this->assertEquals($output, '<input type="submit" value="Register" name="foo" id="bar">');
     }
 

@@ -6,14 +6,16 @@ use PPI\Form\Rule\Maxlength;
 class MaxlengthRuleTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $rule;
+
     function setUp()
     {
-        $this->_rule = new Maxlength();
+        $this->rule = new Maxlength();
     }
 
     function tearDown()
     {
-        unset($this->_rule);
+        unset($this->rule);
     }
 
     /**
@@ -21,8 +23,8 @@ class MaxlengthRuleTest extends \PHPUnit_Framework_TestCase
      */
     function testValidatesTrue($size, $data)
     {
-        $this->_rule->setRuleData($size);
-        $this->assertTrue($this->_rule->validate($data));
+        $this->rule->setRuleData($size);
+        $this->assertTrue($this->rule->validate($data));
     }
 
     /**
@@ -30,8 +32,8 @@ class MaxlengthRuleTest extends \PHPUnit_Framework_TestCase
      */
     function testValidatesFalse($size, $data)
     {
-        $this->_rule->setRuleData($size);
-        $this->assertFalse($this->_rule->validate($data));
+        $this->rule->setRuleData($size);
+        $this->assertFalse($this->rule->validate($data));
     }
 
     function providerForValidationTrue()

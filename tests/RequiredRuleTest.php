@@ -6,14 +6,16 @@ use PPI\Form\Rule\Required;
 class RequiredRuleTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $rule;
+
     function setUp()
     {
-        $this->_rule = new Required();
+        $this->rule = new Required();
     }
 
     function tearDown()
     {
-        unset($this->_rule);
+        unset($this->rule);
     }
 
     /**
@@ -21,7 +23,7 @@ class RequiredRuleTest extends \PHPUnit_Framework_TestCase
      */
     function testValidatesTrue($data)
     {
-        $this->assertTrue($this->_rule->validate($data));
+        $this->assertTrue($this->rule->validate($data));
     }
 
     /**
@@ -29,7 +31,7 @@ class RequiredRuleTest extends \PHPUnit_Framework_TestCase
      */
     function testValidatesFalse($data)
     {
-        $this->assertFalse($this->_rule->validate($data));
+        $this->assertFalse($this->rule->validate($data));
     }
 
     function providerForValidationTrue()

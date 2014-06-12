@@ -7,25 +7,27 @@ use PPI\Form\Element\Hidden,
 class HiddenTest extends \PHPUnit_Framework_TestCase
 {
 
+    protected $form;
+
     function setUp()
     {
-        $this->_form = new Form();
+        $this->form = new Form();
     }
 
     function tearDown()
     {
-        unset($this->_form);
+        unset($this->form);
     }
 
     function testCreate()
     {
-        $output = $this->_form->hidden('hiddenName', array('value' => 'hiddenValue'))->render();
+        $output = $this->form->hidden('hiddenName', array('value' => 'hiddenValue'))->render();
         $this->assertEquals($output, '<input type="hidden" name="hiddenName" value="hiddenValue">');
     }
 
     function testCreateWithAttrs()
     {
-        $output = $this->_form->hidden('hiddenName', array('value' => 'hiddenValue', 'id' => 'bar'))->render();
+        $output = $this->form->hidden('hiddenName', array('value' => 'hiddenValue', 'id' => 'bar'))->render();
         $this->assertEquals($output, '<input type="hidden" name="hiddenName" value="hiddenValue" id="bar">');
     }
 
