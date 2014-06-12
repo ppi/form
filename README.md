@@ -8,12 +8,24 @@ To create elements, you access the appropriate method for that element type. Alt
 ``` php
 <?php
 $form = new Form();
-$form->text('username')
+$form->text('username');
 
 $form->password('password');
 $form->password('confirm_password');
 
 $form->submit('submit_button', 'Click to Continue');
+```
+
+### Setting Attributes On Elements
+
+``` php
+<?php
+$form = new Form();
+$form->text('username')->attr('class', 'username-field')->attr('id', 'username-field');
+
+// Or use method chaining
+$usernameElem = $form->text('username');
+$usernameElem->attr('class', 'username-field')->attr('id', 'username-field');
 ```
 
 ### Getting Elements
