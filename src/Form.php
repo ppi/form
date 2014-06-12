@@ -57,6 +57,13 @@ class Form
         return $this->add('text', $name, $options);
     }
 
+    public function label($label, $name = null, array $options = array())
+    {
+        throw new \Exception('To be implemented');
+        $name = 'label_for_' . $name;
+        return $this->add('label', $name, array('value' => $label) + $options);
+    }
+
     /**
      * Add a textarea field to our form
      *
@@ -172,11 +179,11 @@ class Form
     public function add($elementType, $name, array $options = array())
     {
 
-        if(empty($elementType)) {
+        if (empty($elementType)) {
             throw new \Exception('Missing element type');
         }
 
-        if(empty($name)) {
+        if (empty($name)) {
             throw new \Exception('Missing name option');
         }
 
@@ -185,7 +192,7 @@ class Form
         $element->attr('name', $name);
 
 
-        switch($elementType) {
+        switch ($elementType) {
             case 'dropdown':
             case 'select':
 
@@ -212,8 +219,10 @@ class Form
 
             case 'label':
 
+                // @todo - keep a list of "labels to process" so if you add an element at a later date,
+                // it will find previously added labels and populate them
                 // Setup the for="" for this label to pull from the element's ID matching $name
-                if(isset($this->elements[$name]) && $this->elements[$name]->hasAttribute('id')) {
+                if (isset($this->elements[$name]) && $this->elements[$name]->hasAttribute('id')) {
                     $element->setAttribute('for', $this->elements[$name]->getAttribute('id'));
                 }
 
