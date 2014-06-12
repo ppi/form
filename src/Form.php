@@ -48,7 +48,7 @@ class Form
      */
     public function text($name, array $options = array())
     {
-        return $this->add('text', $name, array('name' => $name) + $options);
+        return $this->add('text', $name, $options);
     }
 
     /**
@@ -60,7 +60,7 @@ class Form
      */
     public function textarea($name, array $options = array())
     {
-        return $this->add('textarea', $name, array('name' => $name) + $options);
+        return $this->add('textarea', $name, $options);
     }
 
     /**
@@ -72,7 +72,7 @@ class Form
      */
     public function password($name, array $options = array())
     {
-        return $this->add('password', $name, array('name' => $name) + $options);
+        return $this->add('password', $name, $options);
     }
 
     /**
@@ -84,7 +84,7 @@ class Form
      */
     public function checkbox($name, array $options = array())
     {
-        return $this->add('checkbox', $name, array('name' => $name) + $options);
+        return $this->add('checkbox', $name, $options);
     }
 
     /**
@@ -96,7 +96,7 @@ class Form
      */
     public function radio($name, array $options = array())
     {
-        return $this->add('radio', $name, array('name' => $name) + $options);
+        return $this->add('radio', $name, $options);
     }
 
     /**
@@ -120,7 +120,7 @@ class Form
      */
     public function hidden($name, array $options = array())
     {
-        return $this->add('hidden', array('name' => $name) + $options);
+        return $this->add('hidden', $options);
     }
 
     /**
@@ -164,6 +164,7 @@ class Form
      */
     public function add($elementType, $name, array $options = array())
     {
+        $options['name'] = $name;
 
         switch ($elementType) {
 
