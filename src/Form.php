@@ -36,7 +36,7 @@ class Form
      */
     public function create($action = '', $method = '', array $options = array())
     {
-        return $this->add('form', array('method' => $method, 'action' => $action) + $options);
+        return $this->add('form', '', array('method' => $method, 'action' => $action) + $options);
     }
 
     /**
@@ -48,7 +48,7 @@ class Form
      */
     public function text($name, array $options = array())
     {
-        return $this->add('text', array('name' => $name) + $options);
+        return $this->add('text', $name, array('name' => $name) + $options);
     }
 
     /**
@@ -60,7 +60,7 @@ class Form
      */
     public function textarea($name, array $options = array())
     {
-        return $this->add('textarea', array('name' => $name) + $options);
+        return $this->add('textarea', $name, array('name' => $name) + $options);
     }
 
     /**
@@ -72,7 +72,7 @@ class Form
      */
     public function password($name, array $options = array())
     {
-        return $this->add('password', array('name' => $name) + $options);
+        return $this->add('password', $name, array('name' => $name) + $options);
     }
 
     /**
@@ -84,7 +84,7 @@ class Form
      */
     public function checkbox($name, array $options = array())
     {
-        return $this->add('checkbox', array('name' => $name) + $options);
+        return $this->add('checkbox', $name, array('name' => $name) + $options);
     }
 
     /**
@@ -96,7 +96,7 @@ class Form
      */
     public function radio($name, array $options = array())
     {
-        return $this->add('radio', array('name' => $name) + $options);
+        return $this->add('radio', $name, array('name' => $name) + $options);
     }
 
     /**
@@ -108,7 +108,7 @@ class Form
      */
     public function submit($value = 'Submit', array $options = array())
     {
-        return $this->add('submit', array('value' => $value) + $options);
+        return $this->add('submit', '', array('value' => $value) + $options);
     }
 
     /**
@@ -162,12 +162,8 @@ class Form
      *
      * @return object
      */
-    public function add($elementType, array $options = array())
+    public function add($elementType, $name, array $options = array())
     {
-
-        if(!isset($options['name'])) {
-            throw new \Exception('Missing option: name');
-        }
 
         switch ($elementType) {
 
@@ -184,7 +180,7 @@ class Form
                 $elementClass = '\PPI\Form\Element\\' . ucfirst($elementType);
                 $element = new $elementClass();
                 $element->setOptions($options);
-                $element->setName($options['name']);
+                $element->setName($name);
                 break;
 
             default:
@@ -214,11 +210,11 @@ class Form
         }
 
         // If we have bind data against the current element. Lets apply it.
-        if (!empty($this->bindData) && isset($this->bindData[$options['name']])) {
-            $element->setValue($this->bindData[$options['name']]);
+        if (!empty($this->bindData) && isset($this->bindData[$name])) {
+            $element->setValue($this->bindData[$name]);
         }
 
-        $this->elements[$options['name']] = $element;
+        $this->elements[$name] = $element;
 
         return $element;
     }
