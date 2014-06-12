@@ -31,30 +31,10 @@ class Textarea extends BaseElement
         if (isset($options['value'])) {
             $value = $options['value'];
             unset($options['value']);
-            $this->value = $value;
+            $this->setValue($value);
         }
-        $this->attributes = $options;
-    }
 
-    /**
-     * Set the value of this field
-     *
-     * @param string $value
-     * @return void
-     */
-    function setValue($value)
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * Get the value of this field.
-     *
-     * @return string
-     */
-    function getValue()
-    {
-        return $this->value;
+        parent::__construct($options);
     }
 
     /**

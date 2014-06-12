@@ -13,7 +13,6 @@ use PPI\Form\Element\Element as BaseElement;
 class Password extends BaseElement
 {
 
-
     /**
      * Render this tag
      *

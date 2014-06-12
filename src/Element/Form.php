@@ -21,7 +21,7 @@ class Form extends BaseElement
     function __construct(array $options = array())
     {
         $options['action'] = isset($options['action']) ? $options['action'] : '';
-        $this->attributes = $options;
+        parent::__construct($options);
     }
 
     /**

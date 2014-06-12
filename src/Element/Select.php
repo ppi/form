@@ -28,7 +28,7 @@ class Select extends BaseElement
      *
      * @var null
      */
-    protected $selected = null;
+    protected $selected;
 
     /**
      * The constructor
@@ -43,29 +43,6 @@ class Select extends BaseElement
         }
 
         parent::setOptions($options);
-    }
-
-
-    /**
-     * Set the values of this field
-     *
-     * @param array $options
-     * @return void
-     */
-    function setValues(array $options)
-    {
-        $this->options = $options;
-    }
-
-    /**
-     * Set the selected value
-     *
-     * @param $value
-     * @return void
-     */
-    function setValue($value)
-    {
-        $this->selected = $value;
     }
 
     /**

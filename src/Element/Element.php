@@ -29,6 +29,8 @@ abstract class Element
      */
     protected $attributes = array();
 
+    protected $options = array();
+
     /**
      * The rules for this field
      *
@@ -40,7 +42,7 @@ abstract class Element
 
     protected $name;
 
-    protected $options = array();
+
 
 
     /**
@@ -259,6 +261,16 @@ abstract class Element
     public function getValue()
     {
         return isset($this->attributes['value']) ? $this->attributes['value'] : '';
+    }
+
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    public function setAttributes(array $attributes)
+    {
+        $this->attributes = $attributes;
     }
 
     /**

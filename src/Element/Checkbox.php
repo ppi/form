@@ -14,37 +14,6 @@ class Checkbox extends BaseElement
 {
 
     /**
-     * The constructor
-     *
-     * @param array $options
-     */
-    function __construct(array $options = array())
-    {
-        $this->attributes = $options;
-    }
-
-    /**
-     * Set the value of this field
-     *
-     * @param string $value
-     * @return void
-     */
-    function setValue($value)
-    {
-        $this->attributes['value'] = $value;
-    }
-
-    /**
-     * Get the value of this field.
-     *
-     * @return string
-     */
-    function getValue()
-    {
-        return $this->attributes['value'];
-    }
-
-    /**
      * Render this tag
      *
      * @return string
