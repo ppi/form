@@ -35,19 +35,14 @@ class Select extends BaseElement
      *
      * @param array $options
      */
-    function __construct(array $options = array())
+    public function setOptions(array $options)
     {
-
         if (isset($options['values'])) {
             $this->setValues($options['values']);
             unset($options['values']);
         }
-        if (isset($options['value'])) {
-            $this->setValue($options['value']);
-            unset($options['value']);
-        }
 
-        $this->attributes = $options;
+        parent::setOptions($options);
     }
 
 

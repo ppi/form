@@ -18,13 +18,20 @@ interface ElementInterface
      * @param mixed $value
      * @return void
      */
-    function attr($name, $value = '');
+    public function attr($name, $value = '');
 
     /**
      * Render the tag
      *
      * @return void
      */
-    function render();
+    public function render();
+
+    /**
+     * Get the element name
+     *
+     * @return string
+     */
+    public function getName();
 
 }

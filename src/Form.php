@@ -8,8 +8,12 @@
  */
 namespace PPI\Form;
 
+use PPI\Form\Element\ElementInterface;
+
 class Form
 {
+
+    protected $elements = array();
 
     /**
      * The bind data for the form.
@@ -18,7 +22,7 @@ class Form
      */
     protected $bindData = array();
 
-    public function __construct()
+    function __construct(array $options = array())
     {
     }
 
@@ -151,87 +155,82 @@ class Form
     /**
      * Add a field to our form.
      *
-     * @param string $fieldType
+     * @param string $elementType
      * @param array $options
      *
      * @throws \Exception if missing a name option
      *
      * @return object
      */
-    public function add($fieldType, array $options = array())
+    public function add($elementType, array $options = array())
     {
 
         if(!isset($options['name'])) {
             throw new \Exception('Missing option: name');
         }
 
-        switch ($fieldType) {
+        switch ($elementType) {
 
             case 'form':
-                $field = new \PPI\Form\Element\Form($options);
-                break;
-
             case 'text':
-                $field = new \PPI\Form\Element\Text($options);
-                break;
-
             case 'textarea':
-                $field = new \PPI\Form\Element\Textarea($options);
-                break;
-
             case 'password':
-                $field = new \PPI\Form\Element\Password($options);
-                break;
-
             case 'submit':
-                $field = new \PPI\Form\Element\Submit($options);
-                break;
-
             case 'checkbox':
-                $field = new \PPI\Form\Element\Checkbox($options);
-                break;
-
             case 'radio':
-                $field = new \PPI\Form\Element\Radio($options);
-                break;
-
             case 'hidden':
-                $field = new \PPI\Form\Element\Hidden($options);
-                break;
-
             case 'select':
             case 'dropdown':
-
-                if (isset($options['dropdownValues'])) {
-                    $values = $options['dropdownValues'];
-                    unset($options['dropdownValues']);
-                }
-                if (isset($options['selected'])) {
-                    $selected = $options['selected'];
-                    unset($options['selected']);
-                }
-
-                // @todo revise this, it needs refactored as we have bind data now.
-                $field = new \PPI\Form\Element\Select($options);
-                if (isset($values)) {
-                    $field->setValues($values);
-                }
-                if (isset($selected)) {
-                    $field->setValue($selected);
-                }
-
+                $elementClass = '\PPI\Form\Element\\' . ucfirst($elementType);
+                $element = new $elementClass();
+                $element->setOptions($options);
+                $element->setName($options['name']);
                 break;
 
             default:
-                throw new \Exception('Invalid Field Type: ' . $fieldType);
+                throw new \Exception('Invalid Field Type: ' . $elementType);
+        }
+
+        if($elementType === 'dropdown' || $elementType === 'select') {
+
+            // Handle Special Options
+            if (isset($options['dropdownValues'])) {
+                $values = $options['dropdownValues'];
+                unset($options['dropdownValues']);
+            }
+            if (isset($options['selected'])) {
+                $selected = $options['selected'];
+                unset($options['selected']);
+            }
+            $element->setOptions($options);
+
+            // @todo revise this, it needs refactored as we have bind data now.
+            if (isset($values)) {
+                $element->setValues($values);
+            }
+            if (isset($selected)) {
+                $element->setValue($selected);
+            }
         }
 
         // If we have bind data against the current element. Lets apply it.
         if (!empty($this->bindData) && isset($this->bindData[$options['name']])) {
-            $field->setValue($this->bindData[$options['name']]);
+            $element->setValue($this->bindData[$options['name']]);
         }
 
-        return $field;
+        $this->elements[$options['name']] = $element;
+
+        return $element;
+    }
+
+    /**
+     * Add an element
+     *
+     * @param ElementInterface $element
+     */
+    public function addElement(ElementInterface $element)
+    {
+        $this->elements[$element->getName()] = $element;
     }
 
     /**

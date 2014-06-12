@@ -12,6 +12,19 @@ abstract class Element
 {
 
     /**
+     * The constructor
+     *
+     * @param array $options
+     */
+    function __construct(array $options = array())
+    {
+        $this->setOptions($options);
+        $this->setAttributes($options);
+        $this->attributes = $options;
+    }
+
+
+    /**
      * @var array
      */
     protected $attributes = array();
@@ -25,6 +38,10 @@ abstract class Element
 
     protected $errorMessage;
 
+    protected $name;
+
+    protected $options = array();
+
 
     /**
      * Render the tag
@@ -32,6 +49,26 @@ abstract class Element
      * @return string
      */
     abstract protected function render();
+
+    /**
+     * Set the element name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get the element name
+     *
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
     /**
      * Getter and setter for attributes
@@ -187,5 +224,51 @@ abstract class Element
         return $this->errorMessage !== null;
     }
 
+    /**
+     * Set element options
+     *
+     * @param array $options
+     */
+    public function setOptions(array $options)
+    {
+
+        if (isset($options['value'])) {
+            $this->setValue($options['value']);
+            unset($options['value']);
+        }
+
+        $this->options = $options;
+    }
+
+    /**
+     * Set the value of this element
+     *
+     * @param string $value
+     * @return void
+     */
+    function setValue($value)
+    {
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Get element value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return isset($this->attributes['value']) ? $this->attributes['value'] : '';
+    }
+
+    /**
+     * Get element options
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
 
 }
