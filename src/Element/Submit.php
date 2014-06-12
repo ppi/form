@@ -13,7 +13,7 @@ use PPI\Form\Element\Element as BaseElement;
 class Submit extends BaseElement
 {
     /**
-     * Render this tag
+     * Render the element
      *
      * @return string
      */

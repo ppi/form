@@ -16,6 +16,8 @@ class Select extends BaseElement
     const optionsFormat = '<option %svalue="%s">%s</option>';
     const selectFormat = '<select %s>%s</select>';
 
+    protected $values;
+
     /**
      * Dropdown Options
      *
@@ -35,7 +37,7 @@ class Select extends BaseElement
      *
      * @param array $options
      */
-    public function setOptions(array $options)
+    public function setOptions($options)
     {
         if (isset($options['values'])) {
             $this->setValues($options['values']);
@@ -45,10 +47,20 @@ class Select extends BaseElement
         parent::setOptions($options);
     }
 
+    public function setValues($values)
+    {
+        $this->values = $values;
+    }
+
+    public function getValues()
+    {
+        return $this->values;
+    }
+
     /**
-     * Build the dropdown options
+     * Build the select options
      *
-     * @return void
+     * @return string
      */
     function buildOptions()
     {
@@ -64,7 +76,7 @@ class Select extends BaseElement
     }
 
     /**
-     * Render this tag
+     * Render this element
      *
      * @return string
      */

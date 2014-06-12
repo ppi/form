@@ -43,6 +43,7 @@ abstract class Element implements ElementInterface
 
     protected $name;
 
+    protected $type;
 
 
 
@@ -78,16 +79,19 @@ abstract class Element implements ElementInterface
      *
      * @param string $name The attribute name
      * @param string $value The attribute value
-     * @return string
+     * @return string|object
      */
     public function attr($name, $value = null)
     {
 
+        // Getter
         if (null === $value) {
-            return isset($this->attributes[$name]) ? $this->attributes[$name] : '';
+            return $this->getAttribute($name);
+
+        // Setter
         } else {
-            $this->attributes[$name] = $value;
-            return '';
+            $this->setAttribute($name, $value);
+            return $this;
         }
     }
 
@@ -188,7 +192,7 @@ abstract class Element implements ElementInterface
      *
      * @param array $options
      */
-    public function setOptions(array $options)
+    public function setOptions($options)
     {
 
         if (isset($options['value'])) {
@@ -225,9 +229,19 @@ abstract class Element implements ElementInterface
         return $this->attributes;
     }
 
-    public function setAttributes(array $attributes)
+    public function setAttributes($attributes)
     {
         $this->attributes = $attributes;
+    }
+
+    public function setAttribute($name, $value)
+    {
+        $this->attributes[$name] = $value;
+    }
+
+    public function getAttribute($name, $default = null)
+    {
+        return isset($this->attributes[$name]) ? $this->attributes[$name] : $default;
     }
 
     /**
@@ -239,5 +253,22 @@ abstract class Element implements ElementInterface
     {
         return $this->options;
     }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 
 }

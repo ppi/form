@@ -10,7 +10,7 @@ namespace PPI\Form\Element;
 
 use PPI\Form\Element\Element as BaseElement;
 
-class Checkbox extends BaseElement
+class Label extends BaseElement
 {
 
     /**
@@ -20,6 +20,11 @@ class Checkbox extends BaseElement
      */
     function render()
     {
-        return '<input type="checkbox" ' . $this->buildAttrs() . '>';
+
+        // Auto-set the 'for' attribute of this to match the ID of the 'name'
+
+        $html = '<label %s>%s</label>';
+        $result = sprintf($html, $this->buildAttrs(), $this->getValue());
+        return $result;
     }
 }

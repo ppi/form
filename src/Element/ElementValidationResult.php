@@ -2,7 +2,6 @@
 
 
 namespace PPI\Form\Element;
-use Symfony\Component\Validator\Constraints\Email;
 
 /**
  * An object which encapsulates the result of Symfony2's Validator component.

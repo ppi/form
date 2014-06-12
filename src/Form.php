@@ -17,6 +17,11 @@ class Form
 
     protected $elements = array();
 
+    protected $elementTypes = array(
+        'text', 'textarea', 'password', 'submit',
+        'checkbox', 'radio', 'hidden', 'select', 'dropdown'
+    );
+
     /**
      * The bind data for the form.
      *
@@ -51,6 +56,13 @@ class Form
     public function text($name, array $options = array())
     {
         return $this->add('text', $name, $options);
+    }
+
+    public function label($label, $name = null, array $options = array())
+    {
+        throw new \Exception('To be implemented');
+        $name = 'label_for_' . $name;
+        return $this->add('label', $name, array('value' => $label) + $options);
     }
 
     /**
@@ -158,6 +170,7 @@ class Form
      * Add a field to our form.
      *
      * @param string $elementType
+     * @param string $name
      * @param array $options
      *
      * @throws \Exception if missing a name option
@@ -167,63 +180,56 @@ class Form
     public function add($elementType, $name, array $options = array())
     {
 
-        // The Getter
-        if(isset($this->elements[$name])) {
-            return $this->elements[$name];
+        if (empty($elementType)) {
+            throw new \Exception('Missing element type');
         }
 
-        $options['name'] = $name;
+        if (empty($name)) {
+            throw new \Exception('Missing name option');
+        }
+
+        // Create the element
+        $element = $this->createElement($elementType, $name, $options);
+        $element->attr('name', $name);
+
 
         switch ($elementType) {
-
-            case 'form':
-            case 'text':
-            case 'textarea':
-            case 'password':
-            case 'submit':
-            case 'checkbox':
-            case 'radio':
-            case 'hidden':
-            case 'select':
             case 'dropdown':
-                $elementClass = '\PPI\Form\Element\\' . ucfirst($elementType);
-                $element = new $elementClass();
+            case 'select':
+
+                // Handle Special Options
+                if (isset($options['dropdownValues'])) {
+                    $values = $options['dropdownValues'];
+                    unset($options['dropdownValues']);
+                }
+                if (isset($options['selected'])) {
+                    $selected = $options['selected'];
+                    unset($options['selected']);
+                }
+                // Re-apply options after some manipulation
                 $element->setOptions($options);
-                $element->setName($name);
+
+                // @todo revise this, it needs refactored as we have bind data now.
+                if (isset($values)) {
+                    $element->setValues($values);
+                }
+                if (isset($selected)) {
+                    $element->setValue($selected);
+                }
                 break;
 
-            default:
-                throw new \Exception('Invalid Field Type: ' . $elementType);
+            case 'label':
+
+                // @todo - keep a list of "labels to process" so if you add an element at a later date,
+                // it will find previously added labels and populate them
+                // Setup the for="" for this label to pull from the element's ID matching $name
+                if (isset($this->elements[$name]) && $this->elements[$name]->hasAttribute('id')) {
+                    $element->setAttribute('for', $this->elements[$name]->getAttribute('id'));
+                }
+
         }
 
-        if($elementType === 'dropdown' || $elementType === 'select') {
-
-            // Handle Special Options
-            if (isset($options['dropdownValues'])) {
-                $values = $options['dropdownValues'];
-                unset($options['dropdownValues']);
-            }
-            if (isset($options['selected'])) {
-                $selected = $options['selected'];
-                unset($options['selected']);
-            }
-            $element->setOptions($options);
-
-            // @todo revise this, it needs refactored as we have bind data now.
-            if (isset($values)) {
-                $element->setValues($values);
-            }
-            if (isset($selected)) {
-                $element->setValue($selected);
-            }
-        }
-
-        // If we have bind data against the current element. Lets apply it.
-        if (!empty($this->bindData) && isset($this->bindData[$name])) {
-            $element->setValue($this->bindData[$name]);
-        }
-
-        $this->elements[$name] = $element;
+        $this->addElement($element);
 
         return $element;
     }
@@ -248,7 +254,7 @@ class Form
     public function getElement($name)
     {
 
-        if(!isset($this->elements[$name])) {
+        if (!isset($this->elements[$name])) {
             throw new \Exception('Missing element by name: ' . $name);
         }
 
@@ -285,6 +291,51 @@ class Form
     public function bind(array $data)
     {
         $this->bindData = $data;
+        if (empty($this->elements)) {
+            return;
+        }
+
+        // Bind data to existing elements
+        foreach ($data as $key => $val) {
+            if (isset($this->elements[$key])) {
+                $this->elements[$key]->setValue($val);
+            }
+        }
+    }
+
+    /**
+     * Create an element
+     *
+     * @param string $type
+     * @param string $name
+     * @param array $options
+     *
+     * @throws \Exception if an invalid field type is passed
+     *
+     * @return Element
+     */
+    protected function createElement($type, $name, array $options = array())
+    {
+        if (!in_array($type, $this->elementTypes)) {
+            throw new \Exception('Invalid Field Type: ' . $type);
+        }
+
+        $elementClass = '\PPI\Form\Element\\' . ucfirst($type);
+        /**
+         * @var Element $element
+         */
+        $element = new $elementClass();
+        $element->setOptions($options);
+        $element->setAttributes($options);
+        $element->setName($name);
+        $element->setType($type);
+
+        // Data Binding to this element if we have data for it.
+        if (!empty($this->bindData) && isset($this->bindData[$name])) {
+            $element->setValue($this->bindData[$name]);
+        }
+
+        return $element;
     }
 
     public function end()
