@@ -16,26 +16,27 @@ $form->password('confirm_password');
 $form->submit('submit_button', 'Click to Continue');
 ```
 
-### Setting Attributes On Elements
-
+### Getting Elements
 ``` php
 <?php
 $form = new Form();
 $form->text('username')->attr('class', 'username-field')->attr('id', 'username-field');
 
-// Or use method chaining
-$usernameElem = $form->text('username');
-$usernameElem->attr('class', 'username-field')->attr('id', 'username-field');
+$usernameElement = $form->get('username');
+
 ```
 
-### Getting Elements
+### Setting Attributes On Elements
+
 ``` php
 <?php
 $form = new Form();
-// ... add elements
 
-$usernameElement = $form->getElement('username');
-$passwordElement = $form->getElement('confirm_password');
+$usernameElem = $form->text('username');
+$usernameElem->attr('class', 'username-field')->attr('id', 'username-field');
+
+// Or use method chaining
+$form->text('username')->attr('class', 'username-field')->attr('id', 'username-field');
 
 ```
 
