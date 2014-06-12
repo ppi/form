@@ -23,11 +23,13 @@ abstract class Element
      */
     protected $rules = array();
 
+    protected $errorMessage;
+
 
     /**
      * Render the tag
      *
-     * @return void
+     * @return string
      */
     abstract protected function render();
 
@@ -36,7 +38,7 @@ abstract class Element
      *
      * @param string $name The attribute name
      * @param string $value The attribute value
-     * @return mixed
+     * @return string
      */
     public function attr($name, $value = null)
     {
@@ -45,6 +47,7 @@ abstract class Element
             return isset($this->attributes[$name]) ? $this->attributes[$name] : '';
         } else {
             $this->attributes[$name] = $value;
+            return '';
         }
     }
 
@@ -116,7 +119,7 @@ abstract class Element
      */
     public function setRule($ruleMessage, $ruleType, $ruleValue = null)
     {
-        $className = 'PPI\\Form\\Rule\\' . ucfirst($ruleType);
+        $className = 'PPI\Form\Rule\\' . ucfirst($ruleType);
         $ruleClass = new $className();
         $ruleClass->setRuleMessage($ruleMessage);
         if ($ruleValue !== null) {
