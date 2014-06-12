@@ -3,5 +3,14 @@
     "autoload": {
         "psr-4": { "PPI\\Form\\": "src/" }
     },
+
+    "require": {
+        "symfony/Validator" : "*"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+
     "minimum-stability": "dev"
 }

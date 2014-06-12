@@ -10,6 +10,7 @@ namespace PPI\Form;
 
 use PPI\Form\Element\Element;
 use PPI\Form\Element\ElementInterface;
+use Symfony\Component\Validator\Validation;
 
 class Form
 {
@@ -342,4 +343,28 @@ class Form
         return '</form>';
     }
 
+    /**
+     * Validates all input elements within a form with their constraints. Returns a hashtable of element names mapped
+     * to an array of their error messages as described in {@link ElementValidationResult::getErrorMessages}
+     *
+     * @return array
+     */
+    public function validate()
+    {
+        $validator = Validation::createValidator();
+        $errors = array();
+
+        /**
+         * @var $element Element
+         */
+        foreach($this->elements as $elementName => $element) {
+            $validationResult = $element->validate($validator);
+            if($validationResult->isSuccessful()) {
+                continue;
+            }
+
+            $errors[$elementName] = $validationResult->getErrorMessages();
+        }
+        return $errors;
+    }
 }

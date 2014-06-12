@@ -8,7 +8,8 @@
  */
 namespace PPI\Form\Element;
 
-use PPI\Form\Element\ElementInterface;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class Element implements ElementInterface
 {
@@ -18,10 +19,10 @@ abstract class Element implements ElementInterface
      *
      * @param array $options
      */
-    function __construct($options = array())
+    function __construct(array $options = array())
     {
         $this->setOptions($options);
-
+        $this->setAttributes($options);
         $this->attributes = $options;
     }
 
@@ -34,24 +35,24 @@ abstract class Element implements ElementInterface
     protected $options = array();
 
     /**
-     * The rules for this field
+     * The Constraints for this field from the Sf2 Validator component.
      *
      * @var array
      */
-    protected $rules = array();
-
-    protected $errorMessage;
+    protected $constraints = array();
 
     protected $name;
 
     protected $type;
+
+
 
     /**
      * Render the tag
      *
      * @return string
      */
-    abstract protected function render();
+    abstract public function render();
 
     /**
      * Set the element name
@@ -152,82 +153,38 @@ abstract class Element implements ElementInterface
         return $this->render();
     }
 
-    /**
-     * Set a rule on this field
-     *
-     * @param string $ruleMessage The Message for this rule
-     * @param string $ruleType The rule type
-     * @param string $ruleValue The rule value (optional)
-     * @return $this
-     */
-    public function setRule($ruleMessage, $ruleType, $ruleValue = null)
+    public function addConstraint(Constraint $constraint)
     {
-        $className = 'PPI\Form\Rule\\' . ucfirst($ruleType);
-        $ruleClass = new $className();
-        $ruleClass->setRuleMessage($ruleMessage);
-        if ($ruleValue !== null) {
-            $ruleClass->setRuleData($ruleValue);
-        }
-        $this->rules[$ruleType] = $ruleClass;
-        return $this;
+        $this->constraints[] = $constraint;
     }
 
-    /**
-     * Get the rule on this field
-     *
-     * @return array
-     */
-    public function getRule($ruleType)
+    public function getConstraints()
     {
-        return isset($this->rules[$ruleType]) ? $this->rules[$ruleType] : null;
+        return $this->constraints;
     }
 
     /**
      * Iterate over all the set rules on this field and validate them
      * Upon failed validation we set the error message and return false
      *
-     * @return bool
+     * @todo garyttierney - do we want the Form to handle validation for every input or should that be left to an element?
+     *       if the latter, we should share a single Validator object between all of them.
+     *
+     * @return ElementValidationResult
      */
-    public function validate()
+    public function validate(ValidatorInterface $validator)
     {
-        foreach ($this->rules as $rule) {
-            if ($rule->validate($this->getValue()) === false) {
-                $this->setErrorMessage($rule->getRuleMessage());
-                return false;
+        // @todo - note, this will be removed in Symfony 3.0 and there's currently no way around that
+        $validatorResult = $validator->validateValue($this->getValue(), $this->getConstraints());
+        if(count($validatorResult) === 0) {
+            return new ElementValidationResult(true);
+        } else {
+            $errorMessages = array();
+            foreach($validatorResult as $constraintViolation) {
+                $errorMessages[] = $constraintViolation->getMessage();
             }
+            return new ElementValidationResult(false, $errorMessages);
         }
-        return true;
-    }
-
-    /**
-     * Set the error message upon failed validation
-     *
-     * @param string $message
-     * @return void
-     */
-    public function setErrorMessage($message)
-    {
-        $this->errorMessage = $message;
-    }
-
-    /**
-     * Get the error message set by a failed validation rule
-     *
-     * @return string|null
-     */
-    public function getErrorMessage()
-    {
-        return $this->errorMessage;
-    }
-
-    /**
-     * Check if a validation has failed or not.
-     *
-     * @return bool
-     */
-    public function hasErrored()
-    {
-        return $this->errorMessage !== null;
     }
 
     /**
