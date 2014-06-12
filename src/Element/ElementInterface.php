@@ -6,9 +6,9 @@
  * @license    http://opensource.org/licenses/mit-license.php MIT
  * @link       http://www.ppi.io
  */
-namespace PPI\Form\Tag;
+namespace PPI\Form\Element;
 
-interface TagInterface
+interface ElementInterface
 {
 
     /**

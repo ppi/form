@@ -7,6 +7,7 @@
  * @link       http://www.ppi.io
  */
 namespace PPI\Form;
+
 abstract class Rule
 {
 

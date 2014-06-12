@@ -6,11 +6,11 @@
  * @license    http://opensource.org/licenses/mit-license.php MIT
  * @link       http://www.ppi.io
  */
-namespace PPI\Form\Tag;
+namespace PPI\Form\Element;
 
-use PPI\Form\Tag as BaseTag;
+use PPI\Form\Element\Element as BaseElement;
 
-class Password extends BaseTag
+class Text extends BaseElement
 {
 
     /**
@@ -51,6 +51,6 @@ class Password extends BaseTag
      */
     function render()
     {
-        return '<input type="password" ' . $this->buildAttrs() . '>';
+        return '<input type="text" ' . $this->buildAttrs() . '>';
     }
 }

@@ -6,11 +6,11 @@
  * @license    http://opensource.org/licenses/mit-license.php MIT
  * @link       http://www.ppi.io
  */
-namespace PPI\Form\Tag;
+namespace PPI\Form\Element;
 
-use PPI\Form\Tag as BaseTag;
+use PPI\Form\Element\Element as BaseElement;
 
-class Submit extends BaseTag
+class Form extends BaseElement
 {
 
     /**
@@ -20,28 +20,8 @@ class Submit extends BaseTag
      */
     function __construct(array $options = array())
     {
+        $options['action'] = isset($options['action']) ? $options['action'] : '';
         $this->attributes = $options;
-    }
-
-    /**
-     * Set the value of this field
-     *
-     * @param string $value
-     * @return void
-     */
-    function setValue($value)
-    {
-        $this->attributes['value'] = $value;
-    }
-
-    /**
-     * Get the value of this field.
-     *
-     * @return string
-     */
-    function getValue()
-    {
-        return $this->attributes['value'];
     }
 
     /**
@@ -51,6 +31,17 @@ class Submit extends BaseTag
      */
     function render()
     {
-        return '<input type="submit" ' . $this->buildAttrs() . '>';
+        $attrs = $this->buildAttrs();
+        return "<form $attrs>";
+    }
+
+    /**
+     * When echo'ing this tag class, we call render
+     *
+     * @return string
+     */
+    function __toString()
+    {
+        return $this->render();
     }
 }

@@ -6,11 +6,11 @@
  * @license    http://opensource.org/licenses/mit-license.php MIT
  * @link       http://www.ppi.io
  */
-namespace PPI\Form\Tag;
+namespace PPI\Form\Element;
 
-use PPI\Form\Tag as BaseTag;
+use PPI\Form\Element\Element as BaseElement;
 
-class Checkbox extends BaseTag
+class Hidden extends BaseElement
 {
 
     /**
@@ -44,6 +44,7 @@ class Checkbox extends BaseTag
         return $this->attributes['value'];
     }
 
+
     /**
      * Render this tag
      *
@@ -51,6 +52,7 @@ class Checkbox extends BaseTag
      */
     function render()
     {
-        return '<input type="checkbox" ' . $this->buildAttrs() . '>';
+        return '<input type="hidden" ' . $this->buildAttrs() . '>';
     }
+
 }

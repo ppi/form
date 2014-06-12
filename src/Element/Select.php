@@ -6,11 +6,11 @@
  * @license    http://opensource.org/licenses/mit-license.php MIT
  * @link       http://www.ppi.io
  */
-namespace PPI\Form\Tag;
+namespace PPI\Form\Element;
 
-use PPI\Form\Tag as BaseTag;
+use PPI\Form\Element\Element as BaseElement;
 
-class Select extends BaseTag
+class Select extends BaseElement
 {
 
     const optionsFormat = '<option %svalue="%s">%s</option>';

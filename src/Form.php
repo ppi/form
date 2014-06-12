@@ -168,7 +168,7 @@ class Form
      *
      * @param string $fieldType
      * @param array $options
-     * @return void
+     * @return object
      */
     public function add($fieldType, array $options = array())
     {
@@ -176,35 +176,35 @@ class Form
         switch ($fieldType) {
 
             case 'form':
-                $field = new \PPI\Form\Tag\Form($options);
+                $field = new \PPI\Form\Element\Form($options);
                 break;
 
             case 'text':
-                $field = new \PPI\Form\Tag\Text($options);
+                $field = new \PPI\Form\Element\Text($options);
                 break;
 
             case 'textarea':
-                $field = new \PPI\Form\Tag\Textarea($options);
+                $field = new \PPI\Form\Element\Textarea($options);
                 break;
 
             case 'password':
-                $field = new \PPI\Form\Tag\Password($options);
+                $field = new \PPI\Form\Element\Password($options);
                 break;
 
             case 'submit':
-                $field = new \PPI\Form\Tag\Submit($options);
+                $field = new \PPI\Form\Element\Submit($options);
                 break;
 
             case 'checkbox':
-                $field = new \PPI\Form\Tag\Checkbox($options);
+                $field = new \PPI\Form\Element\Checkbox($options);
                 break;
 
             case 'radio':
-                $field = new \PPI\Form\Tag\Radio($options);
+                $field = new \PPI\Form\Element\Radio($options);
                 break;
 
             case 'hidden':
-                $field = new \PPI\Form\Tag\Hidden($options);
+                $field = new \PPI\Form\Element\Hidden($options);
                 break;
 
             case 'select':
@@ -220,7 +220,7 @@ class Form
                 }
 
                 // @todo revise this, it needs refactored as we have bind data now.
-                $field = new \PPI\Form\Tag\Select($options);
+                $field = new \PPI\Form\Element\Select($options);
                 if (isset($values)) {
                     $field->setValues($values);
                 }

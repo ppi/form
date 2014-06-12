@@ -6,12 +6,19 @@
  * @license    http://opensource.org/licenses/mit-license.php MIT
  * @link       http://www.ppi.io
  */
-namespace PPI\Form\Tag;
+namespace PPI\Form\Element;
 
-use PPI\Form\Tag as BaseTag;
+use PPI\Form\Element\Element as BaseElement;
 
-class Radio extends BaseTag
+class Textarea extends BaseElement
 {
+
+    /**
+     * The textarea value
+     *
+     * @var string
+     */
+    protected $value = '';
 
     /**
      * The constructor
@@ -20,6 +27,12 @@ class Radio extends BaseTag
      */
     function __construct(array $options = array())
     {
+
+        if (isset($options['value'])) {
+            $value = $options['value'];
+            unset($options['value']);
+            $this->value = $value;
+        }
         $this->attributes = $options;
     }
 
@@ -31,7 +44,7 @@ class Radio extends BaseTag
      */
     function setValue($value)
     {
-        $this->attributes['value'] = $value;
+        $this->value = $value;
     }
 
     /**
@@ -41,7 +54,7 @@ class Radio extends BaseTag
      */
     function getValue()
     {
-        return $this->attributes['value'];
+        return $this->value;
     }
 
     /**
@@ -51,6 +64,6 @@ class Radio extends BaseTag
      */
     function render()
     {
-        return '<input type="radio" ' . $this->buildAttrs() . '>';
+        return '<textarea ' . $this->buildAttrs() . '>' . $this->getValue() . '</textarea>';
     }
 }
