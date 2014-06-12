@@ -76,16 +76,19 @@ abstract class Element
      *
      * @param string $name The attribute name
      * @param string $value The attribute value
-     * @return string
+     * @return string|object
      */
     public function attr($name, $value = null)
     {
 
+        // Getter
         if (null === $value) {
             return isset($this->attributes[$name]) ? $this->attributes[$name] : '';
+
+        // Setter
         } else {
             $this->attributes[$name] = $value;
-            return '';
+            return $this;
         }
     }
 

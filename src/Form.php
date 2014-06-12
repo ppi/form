@@ -176,7 +176,7 @@ class Form
 
         $element = $this->createElement($elementType, $name, $options);
 
-        if($elementType === 'dropdown' || $elementType === 'select') {
+        if ($elementType === 'dropdown' || $elementType === 'select') {
 
             // Handle Special Options
             if (isset($options['dropdownValues'])) {
@@ -197,11 +197,6 @@ class Form
             if (isset($selected)) {
                 $element->setValue($selected);
             }
-        }
-
-        // If we have bind data against the current element. Lets apply it.
-        if (!empty($this->bindData) && isset($this->bindData[$name])) {
-            $element->setValue($this->bindData[$name]);
         }
 
         $this->addElement($element);
@@ -229,7 +224,7 @@ class Form
     public function getElement($name)
     {
 
-        if(!isset($this->elements[$name])) {
+        if (!isset($this->elements[$name])) {
             throw new \Exception('Missing element by name: ' . $name);
         }
 
@@ -266,6 +261,16 @@ class Form
     public function bind(array $data)
     {
         $this->bindData = $data;
+        if (empty($this->elements)) {
+            return;
+        }
+
+        // Bind data to existing elements
+        foreach ($data as $key => $val) {
+            if (isset($this->elements[$key])) {
+                $this->elements[$key]->setValue($val);
+            }
+        }
     }
 
     /**
@@ -278,7 +283,7 @@ class Form
      */
     public function createElement($type, $name, array $options = array())
     {
-        if(!in_array($type, $this->elementTypes)) {
+        if (!in_array($type, $this->elementTypes)) {
             throw new \Exception('Invalid Field Type: ' . $type);
         }
 
@@ -291,6 +296,12 @@ class Form
         $element->setAttributes($options);
         $element->setName($name);
         $element->setType($type);
+
+        // Data Binding
+        if (!empty($this->bindData) && isset($this->bindData[$name])) {
+            $element->setValue($this->bindData[$name]);
+        }
+
         return $element;
     }
 
