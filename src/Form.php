@@ -40,14 +40,11 @@ class Form
      *
      * @param string $name
      * @param array $options
-     * @return string
+     * @return object
      */
     public function text($name, array $options = array())
     {
-        if (!empty($name)) {
-            return $this->add('text', array('name' => $name) + $options);
-        }
-        return '';
+        return $this->add('text', array('name' => $name) + $options);
     }
 
     /**
@@ -55,14 +52,11 @@ class Form
      *
      * @param string $name
      * @param array $options
-     * @return string
+     * @return object
      */
     public function textarea($name, array $options = array())
     {
-        if (!empty($name)) {
-            return $this->add('textarea', array('name' => $name) + $options);
-        }
-        return '';
+        return $this->add('textarea', array('name' => $name) + $options);
     }
 
     /**
@@ -70,14 +64,11 @@ class Form
      *
      * @param string $name
      * @param array $options
-     * @return string
+     * @return object
      */
     public function password($name, array $options = array())
     {
-        if (!empty($name)) {
-            return $this->add('password', array('name' => $name) + $options);
-        }
-        return '';
+        return $this->add('password', array('name' => $name) + $options);
     }
 
     /**
@@ -85,14 +76,11 @@ class Form
      *
      * @param string $name
      * @param array $options
-     * @return string
+     * @return object
      */
     public function checkbox($name, array $options = array())
     {
-        if (!empty($name)) {
-            return $this->add('checkbox', array('name' => $name) + $options);
-        }
-        return '';
+        return $this->add('checkbox', array('name' => $name) + $options);
     }
 
     /**
@@ -100,14 +88,11 @@ class Form
      *
      * @param string $name
      * @param array $options
-     * @return string
+     * @return object
      */
     public function radio($name, array $options = array())
     {
-        if (!empty($name)) {
-            return $this->add('radio', array('name' => $name) + $options);
-        }
-        return '';
+        return $this->add('radio', array('name' => $name) + $options);
     }
 
     /**
@@ -115,7 +100,7 @@ class Form
      *
      * @param string $value
      * @param array $options
-     * @return void
+     * @return object
      */
     public function submit($value = 'Submit', array $options = array())
     {
@@ -127,7 +112,7 @@ class Form
      *
      * @param string $name
      * @param array $options
-     * @return string
+     * @return object
      */
     public function hidden($name, array $options = array())
     {
@@ -140,7 +125,7 @@ class Form
      * @param string $name
      * @param array $dropdownValues
      * @param array $options
-     * @return string
+     * @return object
      */
     public function select($name, array $dropdownValues, array $options = array())
     {
@@ -156,7 +141,7 @@ class Form
      * @param string $name
      * @param array $dropdownValues
      * @param array $options
-     * @return string
+     * @return object
      */
     public function dropdown($name, array $dropdownValues, array $options = array())
     {
@@ -168,10 +153,17 @@ class Form
      *
      * @param string $fieldType
      * @param array $options
+     *
+     * @throws \Exception if missing a name option
+     *
      * @return object
      */
     public function add($fieldType, array $options = array())
     {
+
+        if(!isset($options['name'])) {
+            throw new \Exception('Missing option: name');
+        }
 
         switch ($fieldType) {
 
@@ -235,7 +227,7 @@ class Form
         }
 
         // If we have bind data against the current element. Lets apply it.
-        if (isset($options['name']) && !empty($this->bindData) && isset($this->bindData[$options['name']])) {
+        if (!empty($this->bindData) && isset($this->bindData[$options['name']])) {
             $field->setValue($this->bindData[$options['name']]);
         }
 
