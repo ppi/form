@@ -221,8 +221,8 @@ class Form
                 // @todo - keep a list of "labels to process" so if you add an element at a later date,
                 // it will find previously added labels and populate them
                 // Setup the for="" for this label to pull from the element's ID matching $name
-                if (isset($this->elements[$name]) && $this->elements[$name]->hasAttribute('id')) {
-                    $element->setAttribute('for', $this->elements[$name]->getAttribute('id'));
+                if (isset($this->elements[$name]) && $this->elements[$name]->hasAttr('id')) {
+                    $element->setAttr('for', $this->elements[$name]->getAttr('id'));
                 }
 
         }
