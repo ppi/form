@@ -13,6 +13,8 @@ use PPI\Form\Element\Element as BaseElement;
 class Label extends BaseElement
 {
 
+    protected $type = 'label';
+
     /**
      * Render the element
      *

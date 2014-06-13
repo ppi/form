@@ -18,8 +18,7 @@ class Form
     protected $elements = array();
 
     protected $elementTypes = array(
-        'text', 'textarea', 'password', 'submit',
-        'checkbox', 'radio', 'hidden', 'select', 'dropdown'
+        'form', 'text', 'textarea', 'password', 'submit', 'label', 'checkbox', 'radio', 'hidden', 'select', 'dropdown'
     );
 
     /**
@@ -43,7 +42,7 @@ class Form
      */
     public function create($action = '', $method = '', array $options = array())
     {
-        return $this->add('form', '', array('method' => $method, 'action' => $action) + $options);
+        return $this->add('form', 'form', array('method' => $method, 'action' => $action) + $options);
     }
 
     /**
@@ -60,7 +59,6 @@ class Form
 
     public function label($label, $name = null, array $options = array())
     {
-        throw new \Exception('To be implemented');
         $name = 'label_for_' . $name;
         return $this->add('label', $name, array('value' => $label) + $options);
     }

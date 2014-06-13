@@ -13,6 +13,8 @@ use PPI\Form\Element\Element as BaseElement;
 class Radio extends BaseElement
 {
 
+    protected $type = 'radio';
+
     /**
      * Render the element
      *

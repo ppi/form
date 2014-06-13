@@ -24,6 +24,10 @@ abstract class Element implements ElementInterface
         $this->setOptions($options);
         $this->setAttributes($options);
         $this->attributes = $options;
+
+        if(isset($options['name'])) {
+            $this->setName($options['name']);
+        }
     }
 
 

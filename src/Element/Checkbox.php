@@ -13,6 +13,8 @@ use PPI\Form\Element\Element as BaseElement;
 class Checkbox extends BaseElement
 {
 
+    protected $type = 'checkbox';
+
     /**
      * Render the element
      *

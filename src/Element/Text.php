@@ -13,6 +13,8 @@ use PPI\Form\Element\Element as BaseElement;
 class Text extends BaseElement
 {
 
+    protected $type = 'text';
+
     /**
      * Render the element
      *

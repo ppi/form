@@ -13,6 +13,8 @@ use PPI\Form\Element\Element as BaseElement;
 class Textarea extends BaseElement
 {
 
+    protected $type = 'textarea';
+
     /**
      * The textarea value
      *

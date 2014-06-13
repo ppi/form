@@ -16,7 +16,9 @@ class Select extends BaseElement
     const optionsFormat = '<option %svalue="%s">%s</option>';
     const selectFormat = '<select %s>%s</select>';
 
-    protected $values;
+    protected $type = 'select';
+
+    protected $values = array();
 
     /**
      * Dropdown Options
@@ -65,7 +67,7 @@ class Select extends BaseElement
     function buildOptions()
     {
         $html = '';
-        foreach ($this->options as $key => $val) {
+        foreach ($this->values as $key => $val) {
             $selected = '';
             if ($this->selected !== null && $this->selected == $val) {
                 $selected = 'selected="selected" ';

@@ -13,6 +13,8 @@ use PPI\Form\Element\Element as BaseElement;
 class Password extends BaseElement
 {
 
+    protected $type = 'password';
+
     /**
      * Render the element
      *

@@ -12,6 +12,9 @@ use PPI\Form\Element\Element as BaseElement;
 
 class Submit extends BaseElement
 {
+
+    protected $type = 'submit';
+
     /**
      * Render the element
      *
