@@ -1,5 +1,5 @@
 {
-    "name": "ppi/form",
+    "name": "garyttierney/form",
     "autoload": {
         "psr-4": { "PPI\\Form\\": "src/" }
     },
