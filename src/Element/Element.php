@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class Element implements ElementInterface
 {
+    protected $label;
 
     /**
      * The constructor
@@ -274,5 +275,18 @@ abstract class Element implements ElementInterface
         return $this->type;
     }
 
+    public function getLabel()
+    {
+        return $this->label;
+    }
 
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
+
+    public function hasLabel()
+    {
+        return isset($this->label);
+    }
 }

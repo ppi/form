@@ -13,6 +13,8 @@ use PPI\Form\Element\Element as BaseElement;
 class Label extends BaseElement
 {
 
+
+
     protected $type = 'label';
 
     /**
@@ -22,7 +24,6 @@ class Label extends BaseElement
      */
     function render()
     {
-
         // Auto-set the 'for' attribute of this to match the ID of the 'name'
 
         $html = '<label %s>%s</label>';
