@@ -10,6 +10,8 @@ namespace PPI\Form;
 
 use PPI\Form\Element\Element;
 use PPI\Form\Element\ElementInterface;
+use PPI\Form\Element\Label;
+use PPI\Form\Element\Virtual;
 use Symfony\Component\Validator\Validation;
 
 class Form
@@ -132,7 +134,7 @@ class Form
      */
     public function hidden($name, array $options = array())
     {
-        return $this->add($name, 'hidden', $options);
+        return $this->add('hidden', 'hidden', $options);
     }
 
     /**
@@ -342,13 +344,16 @@ class Form
         return '</form>';
     }
 
+
     /**
      * Validates all input elements within a form with their constraints. Returns a hashtable of element names mapped
      * to an array of their error messages as described in {@link ElementValidationResult::getErrorMessages}
      *
-     * @return array
+     * @param array $input The clients POST data
+     *
+     * @return array An array of error messages keyed by element name
      */
-    public function validate()
+    public function validate(array $input)
     {
         $validator = Validation::createValidator();
         $errors = array();
@@ -356,14 +361,70 @@ class Form
         /**
          * @var $element Element
          */
-        foreach($this->elements as $elementName => $element) {
-            $validationResult = $element->validate($validator);
-            if($validationResult->isSuccessful()) {
+        foreach($this->elements as $key => $element) {
+            if($element instanceof Label) {
                 continue;
             }
 
-            $errors[$elementName] = $validationResult->getErrorMessages();
+            if(substr($key, -2) == "[]") {
+                $elementName = substr($key, 0, -2);
+            } else {
+                $elementName = $key;
+            }
+
+            if(count($element->getConstraints()) > 0) {
+                $value = array_key_exists($elementName, $input) ? $input[$elementName] : null; // map elements with no value to null
+                if(is_array($value) && $element instanceof Virtual) {
+                    $value = $element->transformData($value);
+                }
+
+                $validationResult = $element->validate($value, $validator);
+
+                if ($validationResult->isSuccessful()) {
+                    continue;
+                }
+
+                $errors[$elementName] = $validationResult->getErrorMessages();
+            }
         }
-        return $errors;
+
+        $this->errorMessages = $errors;
+
+        return count($errors) == 0;
+    }
+
+    protected $errorMessages = array();
+
+    public function getErrorsForElement(Element $element)
+    {
+        return $this->errorMessages[$element->getName()];
+    }
+
+    public function hasErrorsForElement(Element $element)
+    {
+        return array_key_exists($element->getName(), $this->errorMessages);
+    }
+
+    /**
+     * Takes an $input an array and checks if the input key corresponds to a Virtual element, if it does then it calls
+     * the {@see Virtual::transformInput} function to make the input value good for validation.
+     *
+     * @param array $input An array of $_POSTed variables.
+     */
+    public function transformInput(array $input)
+    {
+        $output = array();
+
+        foreach($input as $key => $val) {
+            if(array_key_exists($key, $this->elements) && $this->elements[$key] instanceof Virtual) {
+                if (is_array($input)) {
+                    $output[$key] = $this->elements[$key]->transformInput($val);
+                }
+            } else {
+                $output[$key] = $val;
+            }
+        }
+
+        return $output;
     }
 }

@@ -9,7 +9,7 @@
 namespace PPI\Form\Element;
 
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\ValidatorInterface;
 
 abstract class Element implements ElementInterface
 {
@@ -175,12 +175,13 @@ abstract class Element implements ElementInterface
      * @todo garyttierney - do we want the Form to handle validation for every input or should that be left to an element?
      *       if the latter, we should share a single Validator object between all of them.
      *
+     * @param $input string|array
      * @return ElementValidationResult
      */
-    public function validate(ValidatorInterface $validator)
+    public function validate($input, ValidatorInterface $validator)
     {
         // @todo - note, this will be removed in Symfony 3.0 and there's currently no way around that
-        $validatorResult = $validator->validateValue($this->getValue(), $this->getConstraints());
+        $validatorResult = $validator->validateValue($input, $this->getConstraints());
         if(count($validatorResult) === 0) {
             return new ElementValidationResult(true);
         } else {
@@ -192,10 +193,12 @@ abstract class Element implements ElementInterface
         }
     }
 
-    /**
+    /*
+     *
      * Set element options
      *
      * @param array $options
+     *
      */
     public function setOptions($options)
     {
