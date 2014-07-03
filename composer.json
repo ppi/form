@@ -5,7 +5,7 @@
     },
 
     "require": {
-        "symfony/Validator" : "*"
+        "symfony/Validator" : "2.2.*"
     },
 
     "require-dev": {
@@ -14,3 +14,4 @@
 
     "minimum-stability": "dev"
 }
+
